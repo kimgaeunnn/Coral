@@ -15,7 +15,6 @@ edit:
 
 fetch:
 	@tuist fetch
-	@tuist generate --no-open
 
 project: fetch
 	@tuist generate
