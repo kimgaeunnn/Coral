@@ -2,8 +2,8 @@
 //
 // https://github.com/DevYeom/Coral
 
-import SwiftUI
 import CaseConverter
+import SwiftUI
 
 struct CaseConverterExampleView: View {
 
