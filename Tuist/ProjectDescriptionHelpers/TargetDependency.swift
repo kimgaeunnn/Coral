@@ -13,6 +13,7 @@ public extension TargetDependency {
 
     enum Feature: String {
         case colorConverter = "ColorConverter"
+        case caseConverter = "CaseConverter"
     }
 
     enum External: String {
