@@ -2,8 +2,8 @@
 //
 // https://github.com/DevYeom/Coral
 
-import Foundation
 import CaseConverterInterface
+import Foundation
 
 public struct CaseConverter: CaseConverterType {
 

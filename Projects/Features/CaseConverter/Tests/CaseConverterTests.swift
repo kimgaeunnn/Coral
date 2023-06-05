@@ -2,10 +2,10 @@
 //
 // https://github.com/DevYeom/Coral
 
-import Foundation
-import XCTest
 import CaseConverter
 import CaseConverterTesting
+import Foundation
+import XCTest
 
 final class CaseConverterTests: XCTestCase {
 
