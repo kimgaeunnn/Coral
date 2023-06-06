@@ -5,6 +5,7 @@
 import Foundation
 
 public enum CaseConverterType: Equatable, Identifiable, CaseIterable {
+
     case snake
     case camel
 

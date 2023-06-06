@@ -6,6 +6,7 @@ import AppKit
 import Foundation
 
 enum DeviceUtil {
+
     enum Pastboard {
         static func saveOnPasteboard(_ string: String) {
             let pasteboard = NSPasteboard.general
@@ -13,4 +14,5 @@ enum DeviceUtil {
             pasteboard.setString(string, forType: .string)
         }
     }
+
 }

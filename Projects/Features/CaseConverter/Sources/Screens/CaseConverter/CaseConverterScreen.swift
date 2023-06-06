@@ -8,8 +8,8 @@ import SwiftUI
 
 public struct CaseConverterScreen: View {
 
-    @StateObject var way: CaseConverterWay
-    @State var animatesCopy: Bool = false
+    @StateObject private var way: CaseConverterWay
+    @State private var animatesCopy: Bool = false
 
     public init(way: CaseConverterWay) {
         self._way = StateObject<CaseConverterWay>(wrappedValue: way)
@@ -64,7 +64,7 @@ public struct CaseConverterScreen: View {
 
     var inputEditor: some View {
         TextEditor(
-            text: .init(
+            text: Binding<String>(
                 get: { way.state.input },
                 set: { way.send(.edit(input: $0)) }
             )
