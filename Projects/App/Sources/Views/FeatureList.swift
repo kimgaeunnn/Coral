@@ -10,19 +10,25 @@ import SwiftUI
 
 struct FeatureList: View {
 
-    @State private var selectedFeature: CoralFeature?
     @Dependency(\.colorConverterBuilder) var colorConverterBuilder
+    @StateObject private var way: FeatureListWay
+
+    init(way: FeatureListWay) {
+        self._way = .init(wrappedValue: way)
+    }
 
     var title: String {
-        guard let selectedFeature else {
-            return Constants.appName
-        }
-        return selectedFeature.title
+        way.state.selectedFeature?.title ?? Constants.appName
     }
 
     var body: some View {
-        List(selection: $selectedFeature) {
-            ForEach(CoralFeature.allCases) { feature in
+        List(
+            selection: Binding<CoralFeature?>(
+                get: { way.state.selectedFeature },
+                set: { way.send(.select($0)) }
+            )
+        ) {
+            ForEach(way.state.features) { feature in
                 NavigationLink {
                     makeFeatureScreen(feature)
                 } label: {
@@ -33,6 +39,14 @@ struct FeatureList: View {
         }
         .navigationTitle(title)
         .frame(minWidth: 200)
+        .searchable(
+            text: Binding<String>(
+                get: { way.state.searchText },
+                set: { way.send(.search($0)) }
+            ),
+            placement: .sidebar,
+            prompt: "Search"
+        )
     }
 
     @ViewBuilder
@@ -57,7 +71,7 @@ struct FeatureList: View {
 struct FeatureList_Previews: PreviewProvider {
 
     static var previews: some View {
-        FeatureList()
+        FeatureList(way: .init(initialState: .init(features: [], searchText: "")))
     }
 
 }
