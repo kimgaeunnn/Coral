@@ -2,6 +2,7 @@
 //
 // https://github.com/DevYeom/Coral
 
+import CaseConverter
 import ColorConverter
 import CoralKit
 import SwiftUI
@@ -21,7 +22,7 @@ struct FeatureList: View {
         List(selection: $selectedFeature) {
             ForEach(CoralFeature.allCases) { feature in
                 NavigationLink {
-                    routeToFeatureView(feature)
+                    makeFeatureScreen(feature)
                 } label: {
                     Text(feature.title)
                 }
@@ -32,10 +33,18 @@ struct FeatureList: View {
         .frame(minWidth: 200)
     }
 
-    private func routeToFeatureView(_ feature: CoralFeature) -> some View {
+    @ViewBuilder
+    private func makeFeatureScreen(_ feature: CoralFeature) -> some View {
         switch feature {
         case .colorConverter:
-            return ColorConverterView()
+            ColorConverterView()
+
+        case .caseConverter:
+            CaseConverterScreen(
+                way: .init(
+                    initialState: .init(input: "", output: "", converterType: .camel)
+                )
+            )
         }
     }
 
