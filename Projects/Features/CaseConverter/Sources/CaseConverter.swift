@@ -5,7 +5,7 @@
 import CaseConverterInterface
 import Foundation
 
-public struct CaseConverter: CaseConverterType {
+public struct CaseConverter {
 
     public static func hello() {
         print("Hello CaseConverter")
