@@ -8,9 +8,20 @@ struct CoralView: View {
 
     var body: some View {
         NavigationView {
-            FeatureList()
+            featureList
             Text("Select a feature")
         }
+    }
+
+    var featureList: some View {
+        FeatureList(
+            way: .init(
+                initialState: .init(
+                    features: CoralFeature.allCases,
+                    searchText: ""
+                )
+            )
+        )
     }
 
 }
