@@ -16,7 +16,7 @@ public struct CaseConverterScreen: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 40) {
             menuStack
 
             HStack(alignment: .top, spacing: 16) {
@@ -78,15 +78,21 @@ public struct CaseConverterScreen: View {
     }
 
     var outputText: some View {
-        Text(way.state.output)
-            .textSelection(.enabled)
-            .font(.body)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .foregroundColor(Color.white)
-            .padding(24)
-            .background(Color.black.cornerRadius(16))
-            .multilineTextAlignment(.leading)
-            .overlay(copyButton, alignment: .bottomTrailing)
+        ScrollView(.vertical) {
+            VStack(spacing: .zero) {
+                Text(way.state.output)
+                    .textSelection(.enabled)
+                    .font(.body)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                    .foregroundColor(Color.white)
+                    .multilineTextAlignment(.leading)
+
+                Spacer()
+            }
+        }
+        .padding(24)
+        .background(Color.black.cornerRadius(16))
+        .overlay(copyButton, alignment: .bottomTrailing)
     }
 
     var copyButton: some View {

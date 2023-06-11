@@ -8,6 +8,9 @@ public enum CaseConverterType: Equatable, Identifiable, CaseIterable {
 
     case snake
     case camel
+    case pascal
+    case parameter
+    case constant
 
     public var id: String {
         title
@@ -15,44 +18,76 @@ public enum CaseConverterType: Equatable, Identifiable, CaseIterable {
 
     var title: String {
         switch self {
-        case .snake: return "🐍 Snake"
-        case .camel: return "🐪 Camel"
+        case .snake: return "🐍 snake_case"
+        case .camel: return "🐪 camelCase"
+        case .pascal: return "📐 PascalCase"
+        case .parameter: return "🅿️ param-case"
+        case .constant: return "🔠 CONSTANT_CASE"
         }
     }
 
     func convert(_ input: String) -> String {
         switch self {
         case .snake:
-            return input.snakeCased() ?? input
+            return input.snakeCased()
         case .camel:
-            return input.camelCased() ?? input
+            return input.camelCased()
+        case .pascal:
+            return input.pascalCased()
+        case .parameter:
+            return input.parameterCased()
+        case .constant:
+            return input.constantCased()
         }
     }
 
 }
 
 extension String {
-
-    fileprivate func snakeCased() -> String? {
-        let pattern = "([a-z0-9])([A-Z])"
-
-        let regex = try? NSRegularExpression(pattern: pattern, options: [])
-        let range = NSRange(location: 0, length: count)
-        return regex?.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: "$1_$2").lowercased()
+    fileprivate func tokenized() -> [String] {
+        return capitalSeparated()
+            .lowercased()
+            .components(separatedBy: [" ", "_", "-"])
     }
 
-    fileprivate func camelCased() -> String? {
-        guard let expr = try? NSRegularExpression(pattern: "_([a-z])") else { return nil }
-        var result = self
-        for match in expr.matches(in: self, range: NSRange(0 ..< result.count)).reversed() {
-            guard let range = Range(match.range, in: self),
-                let letterRange = Range(match.range(at: 1), in: self)
-            else {
-                return nil
-            }
-            result.replaceSubrange(range, with: self[letterRange].uppercased())
+    fileprivate func capitalSeparated() -> String {
+        guard let regex = try? NSRegularExpression(pattern: "([a-z]+)([A-Z])") else {
+            return self
         }
-        return result
+        return
+            regex
+            .stringByReplacingMatches(
+                in: self,
+                range: NSRange(0 ..< utf16.count),
+                withTemplate: "$1 $2"
+            )
+            .trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
+    fileprivate func snakeCased() -> String {
+        tokenized()
+            .map { $0.lowercased() }
+            .joined(separator: "_")
+    }
+
+    fileprivate func camelCased() -> String {
+        var tokenized = tokenized()
+        let first = tokenized.removeFirst()
+        return first + tokenized.map(\.capitalized).joined()
+    }
+
+    fileprivate func parameterCased() -> String {
+        tokenized()
+            .joined(separator: "-")
+    }
+
+    fileprivate func constantCased() -> String {
+        tokenized()
+            .map { $0.uppercased() }
+            .joined(separator: "_")
+    }
+
+    fileprivate func pascalCased() -> String {
+        tokenized().map(\.capitalized).joined()
+    }
 }
