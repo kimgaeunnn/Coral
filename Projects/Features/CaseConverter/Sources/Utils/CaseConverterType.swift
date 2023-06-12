@@ -27,6 +27,12 @@ public enum CaseConverterType: Equatable, Identifiable, CaseIterable {
     }
 
     func convert(_ input: String) -> String {
+        input.split(whereSeparator: \.isNewline)
+            .map { convertLine(String($0)) }
+            .joined(separator: "\n")
+    }
+
+    func convertLine(_ input: String) -> String {
         switch self {
         case .snake:
             return input.snakeCased()

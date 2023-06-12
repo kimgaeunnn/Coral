@@ -50,6 +50,38 @@ final class CaseConverterTypeTests: XCTestCase {
             let result = CaseConverterType.camel.convert(input)
             XCTAssertEqual(result, "tokenTokenTokenToken")
         }
+
+        do {
+            let input =
+            """
+            camelCase
+            onMultiline
+            """
+            let result = CaseConverterType.camel.convert(input)
+            XCTAssertEqual(
+                result,
+                """
+                camelCase
+                onMultiline
+                """
+            )
+        }
+
+        do {
+            let input =
+            """
+            camel_case
+            on_multiline
+            """
+            let result = CaseConverterType.camel.convert(input)
+            XCTAssertEqual(
+                result,
+                """
+                camelCase
+                onMultiline
+                """
+            )
+        }
     }
 
     func testConvertToSnake() {
@@ -93,6 +125,22 @@ final class CaseConverterTypeTests: XCTestCase {
             let input = "tokenToken_token-token"
             let result = CaseConverterType.snake.convert(input)
             XCTAssertEqual(result, "token_token_token_token")
+        }
+
+        do {
+            let input =
+            """
+            camelCase
+            onMultiline
+            """
+            let result = CaseConverterType.snake.convert(input)
+            XCTAssertEqual(
+                result,
+                """
+                camel_case
+                on_multiline
+                """
+            )
         }
     }
 
