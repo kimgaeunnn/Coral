@@ -6,11 +6,13 @@ import CaseConverter
 import ColorConverterInterface
 import CoralKit
 import Dependencies
+import LineSorterInterface
 import SwiftUI
 
 struct FeatureList: View {
 
     @Dependency(\.colorConverterBuilder) var colorConverterBuilder
+    @Dependency(\.lineSorterBuilder) var lineSorterBuilder
     @StateObject private var way: FeatureListWay
 
     init(way: FeatureListWay) {
@@ -62,6 +64,11 @@ struct FeatureList: View {
                 way: .init(
                     initialState: .init(input: "", output: "", converterType: .camel)
                 )
+            )
+
+        case .lineSorter:
+            lineSorterBuilder(
+                LineSorterDependency()
             )
         }
     }

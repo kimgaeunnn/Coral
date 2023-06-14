@@ -5,10 +5,10 @@
 import AppKit
 import Foundation
 
-enum DeviceUtil {
+public enum DeviceUtil {
 
-    enum Pastboard {
-        static func saveOnPasteboard(_ string: String) {
+    public enum Pastboard {
+        public static func saveOnPasteboard(_ string: String) {
             let pasteboard = NSPasteboard.general
             pasteboard.declareTypes([.string], owner: nil)
             pasteboard.setString(string, forType: .string)

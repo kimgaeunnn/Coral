@@ -8,6 +8,7 @@ enum CoralFeature: CaseIterable, Identifiable {
 
     case colorConverter
     case caseConverter
+    case lineSorter
 
     var id: CoralFeature { self }
 
@@ -15,6 +16,7 @@ enum CoralFeature: CaseIterable, Identifiable {
         switch self {
         case .colorConverter: return "🎨 Color Converter"
         case .caseConverter: return "🐪 Case Converter"
+        case .lineSorter: return "🏛️ Line Sorter"
         }
     }
 
