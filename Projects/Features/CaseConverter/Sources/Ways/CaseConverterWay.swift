@@ -2,6 +2,7 @@
 //
 // https://github.com/DevYeom/Coral
 
+import CoralKit
 import Foundation
 import OneWay
 
