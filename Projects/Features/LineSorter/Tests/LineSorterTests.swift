@@ -10,7 +10,6 @@ import XCTest
 final class LineSorterTests: XCTestCase {
 
     func test_example() {
-        LineSorterMock.hello()
         XCTAssertEqual("LineSorter", "LineSorter")
     }
 

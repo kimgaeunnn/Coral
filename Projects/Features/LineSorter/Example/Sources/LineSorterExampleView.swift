@@ -15,9 +15,6 @@ struct LineSorterExampleView: View {
             Text("Hello, world!")
         }
         .padding()
-        .onAppear {
-            LineSorter.hello()
-        }
     }
 
 }
