@@ -3,13 +3,13 @@
 // https://github.com/DevYeom/Coral
 
 import AppKit
+import CoralUI
 import OneWay
 import SwiftUI
 
 public struct CaseConverterScreen: View {
 
     @StateObject private var way: CaseConverterWay
-    @State private var animatesCopy: Bool = false
 
     public init(way: CaseConverterWay) {
         self._way = StateObject<CaseConverterWay>(wrappedValue: way)
@@ -96,38 +96,9 @@ public struct CaseConverterScreen: View {
     }
 
     var copyButton: some View {
-        HStack(spacing: 4) {
-            Button(
-                action: {
-                    withAnimation {
-                        way.send(.copyOutput)
-                        animatesCopy = true
-
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                            withAnimation {
-                                animatesCopy = false
-                            }
-                        }
-                    }
-                },
-                label: {
-                    Image(systemName: animatesCopy ? "checkmark" : "doc.on.doc.fill")
-                        .font(Font.body.bold())
-                        .imageScale(.large)
-                        .foregroundColor(Color.white)
-                        .transition(.slide)
-                }
-            )
-            .buttonStyle(.plain)
-
-            if animatesCopy {
-                Text("Copied")
-                    .font(Font.body.bold())
-                    .transition(.move(edge: .trailing).combined(with: .opacity))
-            }
+        CopyButton {
+            way.send(.copyOutput)
         }
-        .animation(.easeInOut, value: animatesCopy)
-        .clipped()
         .padding(24)
     }
 }

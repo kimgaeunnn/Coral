@@ -2,12 +2,12 @@
 //
 // https://github.com/DevYeom/Coral
 
+import CoralUI
 import SwiftUI
 
 public struct LineSorterScreen: View {
 
     @StateObject private var way: LineSorterWay
-    @State private var animatesCopy: Bool = false
 
     init(way: LineSorterWay) {
         self._way = StateObject(wrappedValue: way)
@@ -115,38 +115,9 @@ public struct LineSorterScreen: View {
     }
 
     var copyButton: some View {
-        HStack(spacing: 4) {
-            Button(
-                action: {
-                    withAnimation {
-                        way.send(.copyOutput)
-                        animatesCopy = true
-
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                            withAnimation {
-                                animatesCopy = false
-                            }
-                        }
-                    }
-                },
-                label: {
-                    Image(systemName: animatesCopy ? "checkmark" : "doc.on.doc.fill")
-                        .font(Font.body.bold())
-                        .imageScale(.large)
-                        .foregroundColor(Color.white)
-                        .transition(.slide)
-                }
-            )
-            .buttonStyle(.plain)
-
-            if animatesCopy {
-                Text("Copied")
-                    .font(Font.body.bold())
-                    .transition(.move(edge: .trailing).combined(with: .opacity))
-            }
+        CopyButton {
+            way.send(.copyOutput)
         }
-        .animation(.easeInOut, value: animatesCopy)
-        .clipped()
         .padding(24)
     }
 }
