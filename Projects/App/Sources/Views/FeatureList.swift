@@ -10,7 +10,7 @@ import CoralKit
 import Factory
 import LineSorterContainer
 import LineSorterInterface
-import MarkdownPreview
+import MarkdownPreviewContainer
 import MarkdownPreviewInterface
 import SwiftUI
 
@@ -24,7 +24,10 @@ struct FeatureList: View {
 
     @Injected(\LineSorterContainer.lineSorterBuilder)
     private var lineSorterBuilder
-
+    
+    @Injected(\MarkdownPreviewContainer.markdownPreviewBuilder)
+    private var markdownPreviewBuilder
+    
     @StateObject private var way: FeatureListWay
 
     init(way: FeatureListWay) {
@@ -86,7 +89,9 @@ struct FeatureList: View {
             )
 
         case .markdownPreview:
-            EmptyView()
+            markdownPreviewBuilder(
+                MarkdownPreviewDependency()
+            )
         }
     }
 
