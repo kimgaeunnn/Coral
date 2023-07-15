@@ -14,7 +14,7 @@ let dependencies = Dependencies(
             ),
             .remote(
                 url: "https://github.com/gonzalezreal/swift-markdown-ui",
-                requirement: .upToNextMajor(from: "2.0.2")
+                requirement: .upToNextMajor(from: "2.0.0")
             ),
             .remote(
                 url: "https://github.com/DevYeom/OneWay.git",
@@ -23,7 +23,7 @@ let dependencies = Dependencies(
         ],
         productTypes: [
             "Factory": .framework,
-            "MarkdownUI" : .framework,
+            "MarkdownUI" : .staticFramework,
             "OneWay": .framework,
         ],
         baseSettings: .settings(

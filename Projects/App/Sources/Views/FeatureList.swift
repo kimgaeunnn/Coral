@@ -24,10 +24,10 @@ struct FeatureList: View {
 
     @Injected(\LineSorterContainer.lineSorterBuilder)
     private var lineSorterBuilder
-    
+
     @Injected(\MarkdownPreviewContainer.markdownPreviewBuilder)
     private var markdownPreviewBuilder
-    
+
     @StateObject private var way: FeatureListWay
 
     init(way: FeatureListWay) {
